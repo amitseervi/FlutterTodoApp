@@ -11,7 +11,7 @@ class TodoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "${entity.title} : ${entity.id}",
+      entity.title,
       style: TextStyle(
           fontSize: 20,
           color: Colors.indigoAccent,

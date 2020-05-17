@@ -85,28 +85,79 @@ class _MyTodoListState extends State<MyTodoList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: widget.db.queryAllRows(),
-      initialData: List(),
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                itemBuilder: (ctx, position) {
-                  final TodoEntity item =
-                      TodoEntity.fromMap(snapshot.data[position]);
-                  return Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: TodoItem(item),
+        future: widget.db.queryAllRows(),
+        initialData: List(),
+        builder: (context, snapshot) {
+          return ListView.builder(
+              itemBuilder: (ctx, position) {
+                return GestureDetector(
+                  child: Card(
+                      child: Dismissible(
+                    // Show a red background as the item is swiped away.
+                    background: Container(color: Colors.black38),
+                    key: Key(items[position].id.toString()),
+                    onDismissed: (direction) {
+                      TodoEntity item = items[position];
+                      widget.db.delete(item.id);
+                      setState(() {
+                        items.remove(item);
+                      });
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                          content:
+                              Text("${item.title} removed from todo list")));
+                    },
+                    child: GestureDetector(
+                      child: Row(children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: TodoItem(items[position]),
+                        )
+                      ]),
                     ),
-                  );
-                },
-                itemCount:
-                    snapshot.hasData ? (snapshot.data as List).length : 0,
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              );
-      },
+                      )),
+                  onTap: () {
+                    _openNoteDetailDialog(items[position]);
+                  },
+                );
+              },
+              itemCount: items.length);
+        });
+  }
+
+  void _openNoteDetailDialog(TodoEntity entity) {
+    print(entity);
+    showDialog(
+        context: this.context,
+        child: createTodoEntityDetailDialog(this.context, entity));
+  }
+
+  Widget createTodoEntityDetailDialog(BuildContext context, TodoEntity entity) {
+    return AlertDialog(
+      title: Text(entity.title),
+      content: Text(entity.content),
+    );
+  }
+}
+
+class TodoItemDetailDialog extends StatefulWidget {
+  final TodoEntity entity;
+
+  TodoItemDetailDialog({this.entity});
+
+  @override
+  TodoItemDetailDialogState createState() =>
+      new TodoItemDetailDialogState(entity);
+}
+
+class TodoItemDetailDialogState extends State<TodoItemDetailDialog> {
+  final TodoEntity entity;
+
+  TodoItemDetailDialogState(this.entity);
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      body: new Text(entity.title),
     );
   }
 }
