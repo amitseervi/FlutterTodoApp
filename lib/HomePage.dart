@@ -34,6 +34,7 @@ class MyHomePage extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => AddItemPage()),
     );
+    print(result);
     todoList.addTodoEntity(result);
   }
 }
@@ -92,21 +93,20 @@ class _MyTodoListState extends State<MyTodoList> {
               itemBuilder: (ctx, position) {
                 return GestureDetector(
                   child: Card(
-                      child: Dismissible(
-                    // Show a red background as the item is swiped away.
-                    background: Container(color: Colors.black38),
-                    key: Key(items[position].id.toString()),
-                    onDismissed: (direction) {
-                      TodoEntity item = items[position];
-                      widget.db.delete(item.id);
-                      setState(() {
-                        items.remove(item);
-                      });
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                          content:
-                              Text("${item.title} removed from todo list")));
-                    },
-                    child: GestureDetector(
+                    child: Dismissible(
+                      // Show a red background as the item is swiped away.
+                      background: Container(color: Colors.black38),
+                      key: Key(items[position].id.toString()),
+                      onDismissed: (direction) {
+                        TodoEntity item = items[position];
+                        widget.db.delete(item.id);
+                        setState(() {
+                          items.remove(item);
+                        });
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                            content:
+                                Text("${item.title} removed from todo list")));
+                      },
                       child: Row(children: <Widget>[
                         Padding(
                           padding: EdgeInsets.all(16),
@@ -114,7 +114,7 @@ class _MyTodoListState extends State<MyTodoList> {
                         )
                       ]),
                     ),
-                      )),
+                  ),
                   onTap: () {
                     _openNoteDetailDialog(items[position]);
                   },
