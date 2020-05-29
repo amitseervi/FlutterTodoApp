@@ -11,8 +11,7 @@ This project was generated with [Flutter](https://flutter.dev) version 1.0.0+1.
   ```
   
   2. Open FlutterTodoApp project in android studio
-  ```
-  
+
   3. Run app on emulator or connected device.
 
 ## UI
