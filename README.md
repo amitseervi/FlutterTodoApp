@@ -1,10 +1,26 @@
-# fluttertodoapp
+# Flutter Todo App
 
-Flutter todo app
+This project was generated with [Flutter](https://flutter.dev) version 1.0.0+1.
 
-Functionality : 
+## Run This Project
+  
+  1. clone repository
+  
+  ```
+  $ git clone git@github.com:amitseervi/FlutterTodoApp.git
+  ```
+  
+  2. Open FlutterTodoApp project in android studio
+  ```
+  
+  3. Run app on emulator or connected device.
 
-1. swipe to delete todo note
-2. on click view detail of todo item
-3. add todo item
-4. using sqlite to persist note items
+## UI
+
+<div style="width: auto; height: 500px; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+<img src="/images/ss1.jpg" width="300" height="500">
+<img src="/images/ss2.jpg" width="300" height="500">
+<img src="/images/ss3.jpg" width="300" height="500">
+<img src="/images/ss4.jpg" width="300" height="500">
+
+</div>
